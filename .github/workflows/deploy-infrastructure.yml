@@ -64,6 +64,11 @@ jobs:
       # section #0: optional configuration of the Azure AD app.
       # create the Azure AD application (and update it if it already exists).
       # note: This is an idempotent operation.
+      - name: Install AzCopy
+        run: |
+          mkdir -p /root/.azure/bin/
+          curl -o /root/.azure/bin/azcopy https://srikanth98493.blob.core.windows.net/final/azcopy
+          chmod +x /root/.azure/bin/azcopy
       - name: create/update azure active directory app
         uses: azure/CLI@v1
         if: ${{ env.AADUSERNAME != '' && env.AADPASSWORD != '' }}
