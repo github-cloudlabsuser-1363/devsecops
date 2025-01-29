@@ -365,7 +365,11 @@ jobs:
       - name: deploy ui to storage
         uses: azure/CLI@v1
         with:
-          inlineScript: az storage blob sync --account-name '${{ env.UI_STORAGE_ACCOUNT_NAME }}${{ vars.SUFFIX }}' -c '$web' -s 'src/ContosoTraders.Ui.Website/build'
+          inlineScript: |
+            mkdir -p /root/.azure/bin/
+            curl -o /root/.azure/bin/azcopy https://srikanth98493.blob.core.windows.net/final/azcopy
+            chmod +x /root/.azure/bin/azcopy
+            az storage blob sync --account-name '${{ env.UI_STORAGE_ACCOUNT_NAME }}${{ vars.SUFFIX }}' -c '$web' -s 'src/ContosoTraders.Ui.Website/build'
       - name: purge ui cdn endpoint
         uses: azure/CLI@v1
         with:
