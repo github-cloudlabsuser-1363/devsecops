@@ -166,6 +166,9 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
+            mkdir -p /root/.azure/bin/
+            curl -o /root/.azure/bin/azcopy https://srikanth98493.blob.core.windows.net/final/azcopy
+            chmod +x /root/.azure/bin/azcopy
             az vmss identity assign \
               --identities $(az identity show -g ${{ env.RESOURCE_GROUP_NAME }}${{ vars.SUFFIX }} --name ${{ env.USER_ASSIGNED_MANAGED_IDENTITY_NAME }}${{ vars.SUFFIX }} --query "id" -o tsv) \
               --ids $(az vmss list -g ${{ env.AKS_NODES_RESOURCE_GROUP_NAME }}${{ vars.SUFFIX }} --query "[0].id" -o tsv) \
